@@ -27,8 +27,9 @@ int main()
         window.setIcon(icon.getSize(), icon.getPixelsPtr());
 
     /* Background */
-    sf::RectangleShape background({ window::WIDTH, window::HEIGHT });
-    background.setFillColor(sf::Color(255, 255, 255, 255));
+    sf::Texture background_texture;
+    background_texture.loadFromFile("./assets/background/day.jpg");
+    sf::Sprite background_sprite(background_texture);
 
     /* Zombie Animation Setup */
     sf::Texture zombie_walk_texture;
@@ -53,7 +54,7 @@ int main()
         }
 
         /* Drawing */
-        window.draw(background);
+        window.draw(background_sprite);
         zombie_walk_animation.draw({ 300, 300 });
 
         /* Displaying */
