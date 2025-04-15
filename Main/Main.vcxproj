@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -145,10 +145,19 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NormalZombie.cpp" />
+    <ClCompile Include="NormalZombieFactory.cpp" />
+    <ClCompile Include="Zombie.cpp" />
+    <ClCompile Include="ZombieFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="NormalZombie.h" />
+    <ClInclude Include="NormalZombieConfig.h" />
+    <ClInclude Include="NormalZombieFactory.h" />
     <ClInclude Include="WindowConfig.h" />
+    <ClInclude Include="Zombie.h" />
+    <ClInclude Include="ZombieFactory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
