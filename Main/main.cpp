@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "WindowConfig.h"
-#include "Animation.h"
+#include "NormalZombieFactory.h"
 
 int main()                                                                                         
 {
@@ -32,20 +32,15 @@ int main()
     sf::Sprite background_sprite(background_texture);
 
     /* Zombie Animation Setup */
-    sf::Texture zombie_walk_texture;
-    if (!zombie_walk_texture.loadFromFile("./assets/zombie/normal/walk.png"))
-    {
-        std::cerr << "Unable to load asset " << "./assets/zombie/normal/walk.png" << std::endl;
-        zombie_walk_texture = missing_texture;
-        zombie_walk_texture.setRepeated(true);
-    }
-    
-    sf::Sprite zombie_walk_sprite(zombie_walk_texture);
-    Animation zombie_walk_animation(window, zombie_walk_sprite, 22, 5, true);
+    NormalZombieFactory normal_zombie_factory;
+    Zombie* my_zombie = normal_zombie_factory.createZombie({ 300, 300 });
 
     /* Game Loop */
+    uint64_t counter = 0;
     while (window.isOpen())
     {
+        counter += 1;
+
         /* Event Handling */
         while (const std::optional event = window.pollEvent())
         {
@@ -53,9 +48,21 @@ int main()
                 window.close();
         }
 
+        /* Processing */
+        if (counter < 200)
+            my_zombie->walk();
+        else if (counter < 400)
+            my_zombie->die();
+        else if (counter < 600)
+            my_zombie->walk();
+        else if (counter < 800)
+            my_zombie->eat();
+        else
+            my_zombie->die();
+
         /* Drawing */
         window.draw(background_sprite);
-        zombie_walk_animation.draw({ 300, 300 });
+        my_zombie->draw(window);
 
         /* Displaying */
         window.display();
