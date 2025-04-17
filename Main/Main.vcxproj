@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NormalZombie.cpp" />
     <ClCompile Include="NormalZombieFactory.cpp" />
@@ -152,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationController.h" />
     <ClInclude Include="NormalZombie.h" />
     <ClInclude Include="NormalZombieConfig.h" />
     <ClInclude Include="NormalZombieFactory.h" />

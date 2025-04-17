@@ -5,7 +5,7 @@
 #include "WindowConfig.h"
 #include "NormalZombieFactory.h"
 
-int main()                                                                                         
+int main()
 {
     /* Window Init */
     sf::RenderWindow window;
