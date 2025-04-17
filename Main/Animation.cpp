@@ -1,80 +1,30 @@
 #include "Animation.h"
 
-Animation::Animation(sf::Sprite& sprite, uint32_t number_of_sheets, uint32_t time_per_sheet, bool is_looping,
-    uint32_t delay)
-    : sprite(&sprite),
-    number_of_sheets(number_of_sheets),
-    time_per_sheet(time_per_sheet),
-    is_looping(is_looping),
-    current_sheet(0),
-    time(0),
-    has_completed(false),
-    delay(delay)
+Animation::Animation(sf::Texture& texture, uint32_t total_frames, uint32_t start_frame, uint32_t end_frame, 
+    uint32_t time_per_frame, uint32_t delay_before_start, uint32_t delay_after_end, 
+    bool is_looping)
+    : Sprite(texture), 
+    AnimationController(start_frame, end_frame, time_per_frame, delay_before_start, 
+        delay_after_end, is_looping)
 {
-    size = (sf::Vector2i)sprite.getTexture().getSize();
-    size.x /= number_of_sheets;
+    rect.size.x = Sprite::getTexture().getSize().x / total_frames;
+    rect.size.y = Sprite::getTexture().getSize().y;
+    rect.position.x = 0;
+    rect.position.y = 0;
 }
 
-bool Animation::draw(sf::RenderWindow& window, sf::Vector2f position)
+void Animation::update()
 {
-    if (time < delay)
+    AnimationController::update();
+    int frame = AnimationController::getCurrentFrame();
+
+    if (frame == -1)
     {
-        time += 1;
-        return false;
+        Sprite::setTextureRect({ { 0, 0 }, { 0, 0 } });
     }
-
-    sf::Vector2i sheet_position(current_sheet * size.x, 0);
-    sf::Rect<int> rectangle(sheet_position, size);
-
-    sprite->setTextureRect(rectangle);
-    sprite->setPosition(position);
-    window.draw(*sprite);
-
-    time += 1;
-
-    if (time == time_per_sheet + delay)
+    else
     {
-        if (!has_completed)
-        {
-            time = delay;
-            current_sheet += 1;
-        }
-        else
-            time -= 1;
-
-        if (current_sheet == number_of_sheets)
-        {
-            if (!is_looping)
-            {
-                current_sheet -= 1;
-                has_completed = true;
-            }
-            else 
-                current_sheet = 0;
-        }
+        rect.position.x = rect.size.x * (frame - 1);
+        Sprite::setTextureRect(rect);
     }
-
-    return has_completed;
-}
-
-bool Animation::hasCompleted()
-{
-    return has_completed;
-}
-
-void Animation::reset()
-{
-    current_sheet = 0;
-    time = 0;
-    has_completed = false;
-}
-
-uint32_t Animation::getTime()
-{
-    return time - delay;
-}
-
-sf::Vector2i Animation::getSize()
-{
-    return size;
 }

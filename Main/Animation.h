@@ -1,31 +1,20 @@
 #pragma once
 
+#include <cstdint>
 #include <SFML/Graphics.hpp>
+#include "AnimationController.h"
 
-typedef unsigned int uint32_t;
-
-class Animation
+class Animation : public sf::Sprite, public AnimationController
 {
 private:
-    sf::Sprite* sprite;
-    uint32_t number_of_sheets;
-    uint32_t current_sheet;
-    uint32_t time_per_sheet;
-    uint32_t time;
-    sf::Vector2i size;
-    bool is_looping;
-    bool has_completed;
-    uint32_t delay;
+    sf::Rect<int> rect;
 
 public:
     Animation() = delete;
-    Animation(sf::Sprite& sprite, uint32_t number_of_sheets, uint32_t time_per_sheet,
-        bool is_looping, uint32_t delay = 0);
-    Animation(const Animation& other) = default;
+    Animation(sf::Texture& texture, uint32_t total_frames, uint32_t start_frame, uint32_t end_frame, 
+        uint32_t time_per_frame, uint32_t delay_before_start, uint32_t delay_after_end, 
+        bool is_looping);
 
-    bool draw(sf::RenderWindow& window, sf::Vector2f position);
-    bool hasCompleted();
-    void reset();
-    uint32_t getTime();
-    sf::Vector2i getSize();
+    /* Call every iteration */
+    void update();
 };
