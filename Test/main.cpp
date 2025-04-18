@@ -1,11 +1,13 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-#include "./../Main/Animation.cpp"
 #include "./../Main/AnimationController.cpp"
-
+#include "./../Main/Animation.cpp"
+#include "./../Main/ZombieFactory.cpp"
+#include "./../Main/NormalZombieFactory.cpp"
+#include "./../Main/Zombie.cpp"
+#include "./../Main/NormalZombie.cpp"
 #include "./../Main/WindowConfig.h"
-#include "./../Main/NormalZombieConfig.h"
 
 int main()
 {
@@ -26,11 +28,9 @@ int main()
     sf::Sprite background_sprite(background_texture);
 
     /* Animation */
-    sf::Texture zombie_walk;
-    zombie_walk.loadFromFile(NormalZombieConfig::P_WALK);
-    Animation my_anim(zombie_walk, 1, 22, 5, 10, 10, true);
-    my_anim.setPosition({ 1000, 300 });
-    my_anim.setTextureRect(sf::Rect<int>({ 0, 0 }, { 166, 144 }));
+    NormalZombieFactory* factory = NormalZombieFactory::getInstance();
+    Zombie* my_zombie = factory->createZombie({ 600, 300 });
+    Zombie* my_zombie_2 = factory->createZombie({ 700, 100 });
 
     /* Game Loop */
     uint64_t counter = 0;
@@ -46,29 +46,29 @@ int main()
         }
 
         /* Processing */
-        my_anim.update();
         if (counter < 200)
         {
-            my_anim.move({ -1, 0 });
-            my_anim.play();
+            my_zombie->walk();
+            my_zombie_2->walk();
         }
         else if (counter < 400)
         {
-            my_anim.pause();
+            my_zombie->eat();
+            my_zombie_2->walk();
         }
         else if (counter < 600)
         {
-            my_anim.move({ -1, 0 });
-            my_anim.play();
+            my_zombie_2->die();
+            my_zombie->die();
         }
-        else if (counter == 600)
-        {
-            my_anim.reset();
-        }
+
+        my_zombie_2->update();
+        my_zombie->update();
 
         /* Drawing */
         window.draw(background_sprite);
-        window.draw(my_anim);
+        my_zombie->draw(window);
+        my_zombie_2->draw(window);
 
         /* Displaying */
         window.display();

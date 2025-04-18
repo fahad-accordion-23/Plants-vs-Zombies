@@ -159,7 +159,6 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationController.h" />
     <ClInclude Include="NormalZombie.h" />
-    <ClInclude Include="NormalZombieConfig.h" />
     <ClInclude Include="NormalZombieFactory.h" />
     <ClInclude Include="WindowConfig.h" />
     <ClInclude Include="Zombie.h" />

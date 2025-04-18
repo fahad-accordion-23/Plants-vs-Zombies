@@ -1,29 +1,35 @@
 #pragma once
 
 #include "Zombie.h"
-#include "NormalZombieConfig.h"
-using namespace NormalZombieConfig;
+
+namespace NormalZombieConfig
+{
+    constexpr float move_distance = 0.4f;
+
+}
 
 class NormalZombie : public Zombie
 {
 private:
-    Animation* animations[TOTAL_ANIMATIONS];
+    enum State
+    {
+        WALK,
+        EAT,
+        WALK_DIE,
+        EAT_DIE
+    };
+
+    void setState(uint32_t state) override;
 
 public:
-
     NormalZombie() = delete;
-    NormalZombie(Animation* anims[TOTAL_ANIMATIONS], sf::Vector2f position);
+    NormalZombie(Animation** animations                                                   , sf::FloatRect bounds);
+    ~NormalZombie();
 
+    void draw(sf::RenderWindow& window);
+    void update() override;
     void walk() override;
     void eat() override;
-    bool die() override;
-
-    /*
-    void setDistancePerWalk(uint32_t distance);
-    sf::Vector2f getPosition();
-    sf::Vector2i getSize();
-    */
-
-    void draw(sf::RenderWindow& window) override;
+    void die() override;
 };
 

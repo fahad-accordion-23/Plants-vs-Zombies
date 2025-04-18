@@ -6,13 +6,17 @@
 
 class NormalZombieFactory : public ZombieFactory
 {
-protected:
-    void initializeAssets() override;
-    void initializeAnimations() override;
+private:
+    static NormalZombieFactory* instance;
+    sf::Texture textures[6];
+    Animation** states;
+
+    NormalZombieFactory();
 
 public:
-    NormalZombieFactory();
-    ~NormalZombieFactory();
+    NormalZombieFactory(const NormalZombieFactory& obj) = delete;
+
+    static NormalZombieFactory* getInstance();
     Zombie* createZombie(sf::Vector2f position) override;
 };
 

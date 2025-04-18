@@ -56,9 +56,6 @@
     <ClInclude Include="ZombieFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NormalZombieConfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
